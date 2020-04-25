@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="All Pet Store Tests" parallel="tests" thread-count="3">
+
+    <listeners>
+        <listener class-name="utils.testng.listeners.TestListener"/>
+        <listener class-name="utils.testng.listeners.AnnotationTransformer"/>
+    </listeners>
+
+    <test name="Negative Login Tests FIREFOX">
+        <parameter name="browser" value="FIREFOX"/>
+        <classes>
+            <class name="tests.FailedLoginTest"/>
+        </classes>
+    </test>
+    <test name="Negative Login Tests CHROME">
+        <parameter name="browser" value="CHROME"/>
+        <classes>
+            <class name="tests.FailedLoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Positive Login Tests FIREFOX">
+        <parameter name="browser" value="FIREFOX"/>
+        <classes>
+            <class name="tests.PositiveLoginTest"/>
+        </classes>
+    </test>
+    <test name="Positive Login Tests CHROME">
+        <parameter name="browser" value="CHROME"/>
+        <classes>
+            <class name="tests.PositiveLoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Proceed To Checkout Test CHROME">
+        <parameter name="browser" value="CHROME"/>
+        <classes>
+            <class name="tests.ProceedToCheckoutTest"/>
+        </classes>
+    </test>
+
+
+</suite>
