@@ -8,13 +8,13 @@ pipeline {
         }
         stage('Run selenium grid') {
             steps {
-                sh 'sudo docker-compose up -d'
+                sh 'docker-compose up -d'
             }
         }
         stage('Execute test') {
             steps {
                 sh 'mvn test'
-                sh 'sudo docker-compose down'
+                sh 'docker-compose down'
             }
         }
     }
