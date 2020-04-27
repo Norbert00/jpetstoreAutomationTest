@@ -3,7 +3,7 @@ package tests;
 import driver.manager.DriverUtils;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
-import pom.FooterOfMainPage;
+import pom.FooterPage;
 import pom.LoginPage;
 import test.base.TestBase;
 
@@ -17,19 +17,17 @@ public class PositiveLoginTest extends TestBase {
     @Test
     @Description("The goal of this test is to log in using proper username and password" +
             " and check if Dog Banner is displayed after")
-    public void asUserTryToLoginWithCorrectLoginAndPassword() {
+    public void asUserLoginUsingValidLoginAndPassword() {
         DriverUtils.navigateToPage(LOGIN_URL);
 
         LoginPage loginPage = new LoginPage();
         loginPage
-                .typeIntoUserNameField(loginPage.getVALIDUSERNAME())
-                .typeIntoPasswordField(loginPage.getINVALIDPASSWORD())
+                .typeIntoUserNameField("j2ee")
+                .typeIntoPasswordField("j2ee")
                 .clickOnLoginButton();
-        FooterOfMainPage footerOfMainPage = new FooterOfMainPage();
-        footerOfMainPage
+        FooterPage footerPage = new FooterPage();
+        footerPage
                 .assertThatDogBannerIsDisplayed();
-
-
     }
 
 

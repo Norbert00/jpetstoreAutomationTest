@@ -69,11 +69,11 @@ public class LoginPage extends BasePage {
     }
 
     @Step("Click on the Login Button")
-    public MainImageContent clickOnLoginButton() {
+    public LoginPage clickOnLoginButton() {
         WaitForElement.waitUntilElementIsClickable(signOnButton);
         signOnButton.click();
         log().info("User clicked on the sign on button");
-        return new MainImageContent();
+        return this;
     }
 
     @Step("Assert that warning message {warningMessage} is displayed")

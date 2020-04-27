@@ -8,18 +8,17 @@ import waits.WaitForElement;
 
 import static generic.assertions.AssertWebElement.assertThat;
 
-public class FooterOfMainPage extends BasePage {
+public class FooterPage extends BasePage {
 
 
-    @FindBy(css = "#Banner > img")
-    private WebElement pictureOfDog;
-
+    @FindBy(css = "#Banner img[src*='dog']")
+    private WebElement bannerAfterLoginLogo;
 
     @Step("Assert that element dog banner is displayed")
-    public FooterOfMainPage assertThatDogBannerIsDisplayed() {
+    public FooterPage assertThatDogBannerIsDisplayed() {
         log().info("Checking if dog banner is displayed");
-        WaitForElement.waitUntilElementIsVisible(pictureOfDog);
-        assertThat(pictureOfDog).isDisplayed();
+        WaitForElement.waitUntilElementIsVisible(bannerAfterLoginLogo);
+        assertThat(bannerAfterLoginLogo).isDisplayed();
         return this;
     }
 
