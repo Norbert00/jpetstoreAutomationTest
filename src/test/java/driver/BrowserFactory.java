@@ -84,11 +84,13 @@ public class BrowserFactory {
                         System.setProperty("webdriver.chrome.driver", LocalWebDriverProperties.getChromeWebDriverLocation());
                         ChromeOptions options = new ChromeOptions();
                         options.setHeadless(true);
+                        options.addArguments("--no-sandbox");
                         return new ChromeDriver(options);
                     case FIREFOX:
                         System.setProperty("webdriver.gecko.driver", LocalWebDriverProperties.getFirefoxWebDriverLocation());
                         FirefoxOptions option = new FirefoxOptions();
                         option.setHeadless(true);
+                        option.addArguments("--no-sandbox");
                         return new FirefoxDriver(option);
                     default:
                         throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
