@@ -4,8 +4,7 @@ import driver.BrowserFactory;
 import driver.listeners.WebDriverEventListenerRegistrar;
 import org.openqa.selenium.WebDriver;
 
-import static configuration.TestRunProperties.getBrowserToRun;
-import static configuration.TestRunProperties.getIsRemoteRun;
+import static configuration.TestRunProperties.*;
 import static driver.manager.BrowserType.FIREFOX;
 
 public class DriverManager {
@@ -23,9 +22,9 @@ public class DriverManager {
 
         if (browserType == null) {
             browserType = getBrowserToRun();
-            browser = new BrowserFactory(browserType, getIsRemoteRun()).getBrowser();
+            browser = new BrowserFactory(browserType, getIsRemoteRun(), getHeadlessMode()).getBrowser();
         } else {
-            browser = new BrowserFactory(browserType, getIsRemoteRun()).getBrowser();
+            browser = new BrowserFactory(browserType, getIsRemoteRun(), getHeadlessMode()).getBrowser();
         }
 
         browser = WebDriverEventListenerRegistrar.registerWebDriverEventListener(browser);
@@ -49,4 +48,7 @@ public class DriverManager {
         webDriverThreadLocal.remove();
         browserTypeThreadLocal.remove();
     }
+
+
+
 }

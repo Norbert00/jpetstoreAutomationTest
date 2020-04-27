@@ -20,17 +20,51 @@ public class BrowserFactory {
     private static final String MESSAGE_UNKNOWN_BROWSER = "Unknown browser type! Please check your configuration";
     private BrowserType browserType;
     private boolean isRemoteRun;
+    private boolean isHeadLessRun;
 
-    public BrowserFactory(BrowserType browserType, boolean isRemoteRun) {
+    public BrowserFactory(BrowserType browserType, boolean isRemoteRun, boolean isHeadLessRun) {
         this.browserType = browserType;
         this.isRemoteRun = isRemoteRun;
+        // dodane usunać jak się wyspie
+        this.isHeadLessRun = isHeadLessRun;
     }
+
+//    public WebDriver getBrowser() {
+//
+//        if (isRemoteRun) {
+//            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+//
+//            switch (browserType) {
+//                case CHROME:
+//                    ChromeOptions chromeOptions = new ChromeOptions();
+//                    desiredCapabilities.merge(chromeOptions);
+//                    return getRemoteWebDriver(desiredCapabilities);
+//                case FIREFOX:
+//                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+//                    desiredCapabilities.merge(firefoxOptions);
+//                    return getRemoteWebDriver(desiredCapabilities);
+//                default:
+//                    throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
+//            }
+//        } else {
+//            switch (browserType) {
+//                case CHROME:
+//                    System.setProperty("webdriver.chrome.driver", LocalWebDriverProperties.getChromeWebDriverLocation());
+//                    return new ChromeDriver();
+//                case FIREFOX:
+//                    System.setProperty("webdriver.gecko.driver", LocalWebDriverProperties.getFirefoxWebDriverLocation());
+//                    return new FirefoxDriver();
+//                default:
+//                    throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
+//            }
+//        }
+//    }
+
 
     public WebDriver getBrowser() {
 
         if (isRemoteRun) {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-
             switch (browserType) {
                 case CHROME:
                     ChromeOptions chromeOptions = new ChromeOptions();
@@ -44,18 +78,36 @@ public class BrowserFactory {
                     throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
             }
         } else {
-            switch (browserType) {
-                case CHROME:
-                    System.setProperty("webdriver.chrome.driver", LocalWebDriverProperties.getChromeWebDriverLocation());
-                    return new ChromeDriver();
-                case FIREFOX:
-                    System.setProperty("webdriver.gecko.driver", LocalWebDriverProperties.getFirefoxWebDriverLocation());
-                    return new FirefoxDriver();
-                default:
-                    throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
+            if (isHeadLessRun) {
+                switch (browserType) {
+                    case CHROME:
+                        System.setProperty("webdriver.chrome.driver", LocalWebDriverProperties.getChromeWebDriverLocation());
+                        ChromeOptions options = new ChromeOptions();
+                        options.setHeadless(true);
+                        return new ChromeDriver(options);
+                    case FIREFOX:
+                        System.setProperty("webdriver.gecko.driver", LocalWebDriverProperties.getFirefoxWebDriverLocation());
+                        FirefoxOptions option = new FirefoxOptions();
+                        option.setHeadless(true);
+                        return new FirefoxDriver(option);
+                    default:
+                        throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
+                }
+            } else {
+                switch (browserType) {
+                    case CHROME:
+                        System.setProperty("webdriver.chrome.driver", LocalWebDriverProperties.getChromeWebDriverLocation());
+                        return new ChromeDriver();
+                    case FIREFOX:
+                        System.setProperty("webdriver.gecko.driver", LocalWebDriverProperties.getFirefoxWebDriverLocation());
+                        return new FirefoxDriver();
+                    default:
+                        throw new IllegalStateException(MESSAGE_UNKNOWN_BROWSER);
+                }
             }
         }
     }
+
 
     private WebDriver getRemoteWebDriver(DesiredCapabilities desiredCapabilities) {
         RemoteWebDriver remoteWebDriver = null;

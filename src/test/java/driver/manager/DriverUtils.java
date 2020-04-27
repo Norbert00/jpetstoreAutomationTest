@@ -7,13 +7,15 @@ public class DriverUtils {
 
     @Step("Maximizing browser window")
     public static void setInitialConfiguration() {
-        DriverManager.getWebDriver().manage().window().maximize();;
+        DriverManager.getWebDriver().manage().window().maximize();
     }
 
     @Step("Navigating to URL: {pageURL}")
     public static void navigateToPage(String pageURL) {
         DriverManager.getWebDriver().navigate().to(pageURL);
     }
+
+
 
 
 }
